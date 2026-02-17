@@ -1,0 +1,10 @@
+site_name: LangGraph Project Docs
+site_description: Documentation for the LangGraph repository
+repo_url: https://github.com/your-org/langgraph_project
+nav:
+  - Home: index.md
+  - Skills: skills.md
+theme:
+  name: material
+plugins:
+  - search
