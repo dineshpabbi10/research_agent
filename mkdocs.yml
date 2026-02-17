@@ -1,13 +1,37 @@
 site_name: LangGraph Project Docs
 site_description: Documentation for the LangGraph repository
 repo_url: https://github.com/dineshpabbi10/research_agent
+
 nav:
   - Home: index.md
   - Skills: skills.md
   - Vision: long_term_vision.md
+
 theme:
   name: material
   features:
-    - diagrams
+    - navigation.tabs
+    - navigation.sections
+    - content.code.copy
+    - content.code.annotate
+
 plugins:
   - search
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed
+
+extra_javascript:
+  - https://unpkg.com/mermaid@10/dist/mermaid.min.js
+  - js/mermaid-init.js
