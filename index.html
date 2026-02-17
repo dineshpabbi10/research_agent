@@ -76,9 +76,7 @@
     
       
 
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="." title="LangGraph Project Docs" class="md-header__button md-logo" aria-label="LangGraph Project Docs" data-md-component="logo">
       
@@ -174,6 +172,74 @@
       
         
           
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="skills/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Skills
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="long_term_vision/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Vision
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -187,8 +253,10 @@
                     
 
 
+  
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="." title="LangGraph Project Docs" class="md-nav__button md-logo" aria-label="LangGraph Project Docs" data-md-component="logo">
       
@@ -409,16 +477,16 @@
   
 
 
-<h1 id="langgraph-project-documentation">LangGraph Project Documentation</h1>
+<h1 id="langgraph-project-documentation">LangGraph Project Documentation<a class="headerlink" href="#langgraph-project-documentation" title="Permanent link">&para;</a></h1>
 <p>Welcome to the project documentation. This site is generated with MkDocs.</p>
-<h2 id="quickstart">Quickstart</h2>
+<h2 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">&para;</a></h2>
 <p>Install dependencies and serve locally (using Poetry):</p>
-<pre><code class="language-bash">poetry install --with dev
-poetry run mkdocs serve
-</code></pre>
+<div class="highlight"><pre><span></span><code>poetry<span class="w"> </span>install<span class="w"> </span>--with<span class="w"> </span>dev
+poetry<span class="w"> </span>run<span class="w"> </span>mkdocs<span class="w"> </span>serve
+</code></pre></div>
 <p>Build the static site:</p>
-<pre><code class="language-bash">poetry run mkdocs build
-</code></pre>
+<div class="highlight"><pre><span></span><code>poetry<span class="w"> </span>run<span class="w"> </span>mkdocs<span class="w"> </span>build
+</code></pre></div>
 <p>See the <code>Skills</code> page for a machine-friendly <code>python_best_practices</code> skill.</p>
 
 
@@ -469,10 +537,14 @@ poetry run mkdocs serve
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tabs", "navigation.sections", "content.code.copy", "content.code.annotate"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="js/mermaid-init.js"></script>
       
     
   </body>

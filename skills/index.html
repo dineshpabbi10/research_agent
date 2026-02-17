@@ -78,9 +78,7 @@
     
       
 
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="LangGraph Project Docs" class="md-header__button md-logo" aria-label="LangGraph Project Docs" data-md-component="logo">
       
@@ -176,6 +174,74 @@
       
         
           
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Skills
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../long_term_vision/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Vision
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -189,8 +255,10 @@
                     
 
 
+  
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="LangGraph Project Docs" class="md-nav__button md-logo" aria-label="LangGraph Project Docs" data-md-component="logo">
       
@@ -499,17 +567,17 @@
   
 
 
-<h1 id="python-best-practices-skill">Python Best Practices Skill</h1>
+<h1 id="python-best-practices-skill">Python Best Practices Skill<a class="headerlink" href="#python-best-practices-skill" title="Permanent link">&para;</a></h1>
 <p>This page provides a concise, agent-friendly summary of the <code>python_best_practices</code> skill.</p>
-<h2 id="machine-friendly-summary">Machine-friendly summary</h2>
-<pre><code class="language-yaml">skill: python_best_practices
-provides:
-  - best_practices_checklist
-  - pytest_mocker_example
-  - langchain_snippet
-  - langgraph_notes
-</code></pre>
-<h2 id="best-practices-checklist">Best-practices checklist</h2>
+<h2 id="machine-friendly-summary">Machine-friendly summary<a class="headerlink" href="#machine-friendly-summary" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="nt">skill</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python_best_practices</span>
+<span class="nt">provides</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">best_practices_checklist</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest_mocker_example</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">langchain_snippet</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">langgraph_notes</span>
+</code></pre></div>
+<h2 id="best-practices-checklist">Best-practices checklist<a class="headerlink" href="#best-practices-checklist" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Use type hints for public APIs.</li>
 <li>Prefer <code>@dataclass</code> for small data holders.</li>
@@ -518,25 +586,25 @@ provides:
 <li>Use <code>pytest-mock</code> (the <code>mocker</code> fixture) for lightweight mocking.</li>
 <li>Enforce formatting/linting with <code>black</code>, <code>ruff</code>, and <code>isort</code> in CI and pre-commit.</li>
 </ul>
-<h2 id="mocker-example">Mocker example</h2>
-<pre><code class="language-python">def test_call_external_service_with_mocker(mocker):
-    mock_service = mocker.Mock()
-    mock_service.get.return_value = {&quot;ok&quot;: True}
+<h2 id="mocker-example">Mocker example<a class="headerlink" href="#mocker-example" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_call_external_service_with_mocker</span><span class="p">(</span><span class="n">mocker</span><span class="p">):</span>
+    <span class="n">mock_service</span> <span class="o">=</span> <span class="n">mocker</span><span class="o">.</span><span class="n">Mock</span><span class="p">()</span>
+    <span class="n">mock_service</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ok&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
 
-    result = mock_service.get(&quot;my-resource&quot;)
+    <span class="n">result</span> <span class="o">=</span> <span class="n">mock_service</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;my-resource&quot;</span><span class="p">)</span>
 
-    assert result == {&quot;ok&quot;: True}
-    mock_service.get.assert_called_once_with(&quot;my-resource&quot;)
-</code></pre>
-<h2 id="langchain-snippet">LangChain snippet</h2>
-<pre><code class="language-python">from langchain import OpenAI, LLMChain, PromptTemplate
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;ok&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+    <span class="n">mock_service</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s2">&quot;my-resource&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="langchain-snippet">LangChain snippet<a class="headerlink" href="#langchain-snippet" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span><span class="p">,</span> <span class="n">LLMChain</span><span class="p">,</span> <span class="n">PromptTemplate</span>
 
-prompt = PromptTemplate(input_variables=[&quot;topic&quot;], template=&quot;Write a short summary about {topic}.&quot;)
-llm = OpenAI()
-chain = LLMChain(llm=llm, prompt=prompt)
-print(chain.run({&quot;topic&quot;: &quot;unit testing with mocker&quot;}))
-</code></pre>
-<h2 id="langgraph-notes">LangGraph notes</h2>
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">(</span><span class="n">input_variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;topic&quot;</span><span class="p">],</span> <span class="n">template</span><span class="o">=</span><span class="s2">&quot;Write a short summary about </span><span class="si">{topic}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">()</span>
+<span class="n">chain</span> <span class="o">=</span> <span class="n">LLMChain</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">({</span><span class="s2">&quot;topic&quot;</span><span class="p">:</span> <span class="s2">&quot;unit testing with mocker&quot;</span><span class="p">}))</span>
+</code></pre></div>
+<h2 id="langgraph-notes">LangGraph notes<a class="headerlink" href="#langgraph-notes" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Keep node logic small and injectable so agents can auto-generate unit tests.</li>
 <li>Provide adapters for external services so they can be mocked in CI.</li>
@@ -591,10 +659,14 @@ print(chain.run({&quot;topic&quot;: &quot;unit testing with mocker&quot;}))
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../js/mermaid-init.js"></script>
       
     
   </body>
