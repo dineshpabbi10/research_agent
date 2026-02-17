@@ -7,5 +7,7 @@ nav:
   - Vision: long_term_vision.md
 theme:
   name: material
+  features:
+    - diagrams
 plugins:
   - search
