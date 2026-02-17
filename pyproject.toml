@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "research-agent"
+version = "0.1.0"
+description = ""
+authors = ["Dinesh Pabbi <dineshpabbi10@gmail.com>"]
+readme = "README.md"
+packages = [{include = "research_agent"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+langgraph = "^1.0.8"
+langchain-openai = "^1.1.9"
+langgraph-checkpoint-sqlite = "^3.0.3"
+langchain-community = "^0.4.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
