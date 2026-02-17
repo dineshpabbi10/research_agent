@@ -12,12 +12,15 @@ langgraph = "^1.0.8"
 langchain-openai = "^1.1.9"
 langgraph-checkpoint-sqlite = "^3.0.3"
 langchain-community = "^0.4.1"
+pydantic-settings = "^2.13.0"
+asyncio = "^4.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
 mkdocs = "^1.6.1"
 mkdocs-material = "^9.7.1"
 pymdown-extensions = "^10.21"
+ruff = "^0.15.1"
 
 [build-system]
 requires = ["poetry-core"]
