@@ -17,6 +17,7 @@ from langchain_core.messages import ToolMessage
 
 from research_agent.models.internet_research import (
     Headings,
+    InternetSearchResultModel,
     Links,
     SEOAnalysisResult,
     InternetSearchQueryModel,
@@ -50,10 +51,10 @@ async def get_search_query(runtime: ToolRuntime) -> Command:
 
     # Call LLM to generate queries
     model = ChatOpenAI(model=ResearchAgentConfig().model_name)
-    model = model.with_structured_output(InternetSearchQueryModel)
+    model = model.with_structured_output(InternetSearchResultModel)
     try:
         result = model.invoke(TOPIC_SELECTION_SYSTEM_PROMPT.format(user_topic=topic))
-        output = InternetSearchQueryModel.model_validate(result)
+        output = InternetSearchResultModel.model_validate(result)
     except Exception as e:
         return Command(
             update={

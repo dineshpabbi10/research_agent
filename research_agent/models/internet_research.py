@@ -1,3 +1,5 @@
+from langchain.agents import AgentState
+from langgraph.graph import MessagesState
 from pydantic import BaseModel, Field
 from operator import add
 from typing import Dict, List, Optional, Tuple,Annotated
@@ -32,7 +34,10 @@ class SEOAnalysisResult(BaseModel):
 
     readability_score: float
 
-class InternetSearchQueryModel(BaseModel):
+class InternetSearchResultModel(BaseModel):
+    search_queries : list[str]
+
+class InternetSearchQueryModel(AgentState):
     search_queries : list[str]
     relevant_blog_post_links : list[str]
     seo_results : list[SEOAnalysisResult]
