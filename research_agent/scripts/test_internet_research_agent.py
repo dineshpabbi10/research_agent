@@ -11,6 +11,8 @@ from langchain.agents import create_agent
 async def test_internet_research_agent():
     # Initialize model
     model = ChatOpenAI(model=ResearchAgentConfig().model_name)
+    model = model.bind_tools(internet_research_tools)
+    print("Creating Internet Research Agent with model:", ResearchAgentConfig().model_name)
 
     # Create agent
     internet_research_agent = create_agent(
@@ -27,11 +29,21 @@ async def test_internet_research_agent():
         "relevant_blog_post_links": None,
         "seo_results": None
     }
-    # Run the agent to generate search queries
-    output = await internet_research_agent.ainvoke(input=input_state)
+    
+    # Run the agent in a loop until all tools are used or no tool calls remain
+    state = input_state
+    max_iterations = 10
+    iteration = 0
+    
 
-    # Print any ToolMessages for hints/errors
-    print(output)
+    output = await internet_research_agent.ainvoke(input=state)
+    
+    for message in output.get("messages", []):
+        message.pretty_print()
+    
+    print(model.invoke(f"Given the context : {output} , Can you write a blog post for topic : Start for topic Role of AI agents in ecommerce"))
+
+
 
 # Run the test
 asyncio.run(test_internet_research_agent())

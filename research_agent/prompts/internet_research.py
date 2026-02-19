@@ -27,6 +27,7 @@ INSTRUCTIONS:
 - Return ONLY a JSON array of strings.
 
 Topic: {topic}
+Remember do not create more than 5 queries
 """
 
 INTERNET_RESEARCH_SYSTEM_PROMPT = """

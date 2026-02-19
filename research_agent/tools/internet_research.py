@@ -73,7 +73,7 @@ async def get_search_query(runtime: ToolRuntime) -> Command:
             "search_queries": output.search_queries,
             "messages": [
                 ToolMessage(
-                    content=f"Generated {len(output.search_queries)} search queries for topic '{topic}'.",
+                    content=f"Generated {len(output.search_queries)} search queries for topic '{topic}'. We can proceed to search the internet for relevant blog posts.",
                     tool_call_id=tool_id,
                     status="success"
                 )
@@ -93,7 +93,10 @@ async def search_internet_with_tavily(runtime: ToolRuntime) -> Command:
     tool_id = runtime.tool_call_id or "search_internet_with_tavily"
     search_queries: list[str] = runtime.state.get("search_queries", [])
 
+    print(f"Running tool 'search_internet_with_tavily' with search queries: {search_queries}")
+
     if not search_queries or not all(isinstance(q, str) for q in search_queries):
+        print("Type error")
         return Command(
             update={
                 "messages": [
@@ -113,12 +116,14 @@ async def search_internet_with_tavily(runtime: ToolRuntime) -> Command:
             client = tavily.AsyncTavilyClient()
             results = await client.search(query, num_results=3)
             links: list[str] = [
-                cast(Dict[str, Any], r)["link"]
-                for r in results
-                if isinstance(r, dict) and "link" in r
+                r["url"]
+                for r in results.get("results", [])
+                if isinstance(r, dict) and "url" in r
             ]
+            print(links)
             return links
-        except Exception:
+        except Exception as e:
+            print(f"Error searching query '{query}': {e}")
             return []
 
     tasks = [search_query(q) for q in search_queries]
@@ -144,59 +149,64 @@ async def search_internet_with_tavily(runtime: ToolRuntime) -> Command:
 
 # --------------------------- HELPER: ANALYZE SEO OF SINGLE PAGE ---------------------------
 
-async def analyze_seo_of_webpage(url: str) -> SEOAnalysisResult:
+async def analyze_seo_of_webpage(url: str) -> SEOAnalysisResult | None:
     """
     Analyze SEO of a webpage from a given URL.
     """
-    # Fetch HTML
-    html = requests.get(url, timeout=10).text
-    soup = BeautifulSoup(html, "html.parser")
+    try:
+        # Fetch HTML
+        print(f"Analyzing SEO for URL: {url}")
+        html = requests.get(url, timeout=10).text
+        soup = BeautifulSoup(html, "html.parser")
 
-    # Extract article text
-    downloaded = trafilatura.fetch_url(url)
-    article_text = trafilatura.extract(downloaded) or ""
-    words = article_text.split()
-    word_count = len(words)
+        # Extract article text
+        downloaded = trafilatura.fetch_url(url)
+        article_text = trafilatura.extract(downloaded) or ""
+        words = article_text.split()
+        word_count = len(words)
 
-    # Keyword Extraction
-    kw_extractor = yake.KeywordExtractor(lan="en", n=1, top=20)
-    keywords = kw_extractor.extract_keywords(article_text)
-    keyword_freq = Counter(words)
-    top_keywords = dict(keyword_freq.most_common(20))
+        # Keyword Extraction
+        kw_extractor = yake.KeywordExtractor(lan="en", n=1, top=20)
+        keywords = kw_extractor.extract_keywords(article_text)
+        keyword_freq = Counter(words)
+        top_keywords = dict(keyword_freq.most_common(20))
 
-    # Meta & Headings
-    title = soup.title.string if soup.title else None
-    meta_desc_tag = soup.find("meta", attrs={"name": "description"})
-    meta_description = meta_desc_tag["content"] if meta_desc_tag else None
-    h1_tags = [h.get_text(strip=True) for h in soup.find_all("h1")]
-    h2_tags = [h.get_text(strip=True) for h in soup.find_all("h2")]
-    h3_tags = [h.get_text(strip=True) for h in soup.find_all("h3")]
+        # Meta & Headings
+        title = soup.title.string if soup.title else None
+        meta_desc_tag = soup.find("meta", attrs={"name": "description"})
+        meta_description = meta_desc_tag["content"] if meta_desc_tag else None
+        h1_tags = [h.get_text(strip=True) for h in soup.find_all("h1")]
+        h2_tags = [h.get_text(strip=True) for h in soup.find_all("h2")]
+        h3_tags = [h.get_text(strip=True) for h in soup.find_all("h3")]
 
-    # Links
-    domain = urlparse(url).netloc
-    internal_links = 0
-    external_links = 0
-    for a in soup.find_all("a", href=True):
-        href = a["href"]
-        if domain in href:
-            internal_links += 1
-        elif isinstance(href, str) and href.startswith("http"):
-            external_links += 1
+        # Links
+        domain = urlparse(url).netloc
+        internal_links = 0
+        external_links = 0
+        for a in soup.find_all("a", href=True):
+            href = a["href"]
+            if domain in href:
+                internal_links += 1
+            elif isinstance(href, str) and href.startswith("http"):
+                external_links += 1
 
-    # Readability
-    readability_score = textstat.flesch_reading_ease(article_text)
+        # Readability
+        readability_score = textstat.flesch_reading_ease(article_text)
 
-    return SEOAnalysisResult(
-        url=url,
-        title=title,
-        meta_description=str(meta_description) if meta_description else None,
-        word_count=word_count,
-        top_keywords_frequency=top_keywords,
-        yake_keywords=keywords,
-        headings=Headings(h1=h1_tags, h2=h2_tags, h3=h3_tags),
-        links=Links(internal=internal_links, external=external_links),
-        readability_score=readability_score
-    )
+        return SEOAnalysisResult(
+            url=url,
+            title=title,
+            meta_description=str(meta_description) if meta_description else None,
+            word_count=word_count,
+            top_keywords_frequency=top_keywords,
+            yake_keywords=keywords,
+            headings=Headings(h1=h1_tags, h2=h2_tags, h3=h3_tags),
+            links=Links(internal=internal_links, external=external_links),
+            readability_score=readability_score
+        )
+    except Exception as e:
+        print(f"Error analyzing SEO for URL '{url}': {e}")
+        return None
 
 
 # --------------------------- TOOL: ANALYZE LINKS SEO ---------------------------
@@ -226,6 +236,7 @@ async def analyze_links_seo(runtime: ToolRuntime) -> Command:
     tasks = [analyze_seo_of_webpage(url) for url in urls]
     try:
         results = await asyncio.gather(*tasks)
+        results = [r for r in results if r is not None]
     except Exception as e:
         return Command(
             update={
