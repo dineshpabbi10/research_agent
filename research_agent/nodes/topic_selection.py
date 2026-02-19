@@ -17,7 +17,7 @@ async def check_human_feedback(state: TopicSelectionState) -> TopicSelectionStat
     Check if the user has provided feedback on the suggested topic and update the state accordingly.
     """
     logger.info(state)
-    if state.user_input is not None:
+    if state.user_input is not None and state.suggested_topic is not None:
         state.selected_topic = (
             state.user_input if state.user_input != "accept" else state.suggested_topic
         )
@@ -38,11 +38,12 @@ async def check_topic_broadness(state: TopicSelectionState) -> TopicSelectionSta
 
     prompt = TOPIC_SELECTION_SYSTEM_PROMPT.format(user_topic=state.selected_topic)
     result = llm.invoke(prompt)
+
+    result = TopicSelectionResult.model_validate(result)
     # If topic is too broad, interrupt and ask user to select a more specific topic
     state.is_broad = result.is_broad
     state.suggested_topic = result.selected_topic
     return state
-
 
 async def get_human_feedback(
     state: TopicSelectionState,

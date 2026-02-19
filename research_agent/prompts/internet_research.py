@@ -28,3 +28,7 @@ INSTRUCTIONS:
 
 Topic: {topic}
 """
+
+INTERNET_RESEARCH_SYSTEM_PROMPT = """
+
+"""

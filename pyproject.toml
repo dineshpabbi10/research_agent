@@ -14,6 +14,12 @@ langgraph-checkpoint-sqlite = "^3.0.3"
 langchain-community = "^0.4.1"
 pydantic-settings = "^2.13.0"
 asyncio = "^4.0.0"
+trafilatura = "^2.0.0"
+beautifulsoup4 = "^4.14.3"
+yake = "^0.7.3"
+textstat = "^0.7.13"
+tavily = "^1.1.0"
+langchain = "^1.2.10"
 
 
 [tool.poetry.group.dev.dependencies]
