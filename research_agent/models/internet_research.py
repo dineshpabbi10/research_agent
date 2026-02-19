@@ -38,8 +38,9 @@ class InternetSearchResultModel(BaseModel):
     search_queries : list[str]
 
 class InternetSearchQueryModel(AgentState):
-    search_queries : list[str]
-    relevant_blog_post_links : list[str]
-    seo_results : list[SEOAnalysisResult]
+    selected_topic:str
+    search_queries : list[str] | None
+    relevant_blog_post_links : list[str] | None
+    seo_results : list[SEOAnalysisResult] | None
 
 
